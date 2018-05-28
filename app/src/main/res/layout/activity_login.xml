@@ -49,6 +49,7 @@
         android:background="@drawable/button_roundedcorners"
         android:textColor="@android:color/white"
         android:fontFamily="@font/lato"
+        android:onClick="submitClicked"
         android:layout_marginTop= "20px"
         android:text="Submit" />
 </LinearLayout>
