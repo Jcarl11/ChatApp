@@ -53,4 +53,5 @@
         android:onClick="submitClicked"
         android:layout_marginTop= "20px"
         android:text="Submit" />
+
 </LinearLayout>
