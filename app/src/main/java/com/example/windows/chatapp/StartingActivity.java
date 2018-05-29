@@ -29,19 +29,23 @@ public class StartingActivity extends AppCompatActivity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null)
         {
-            Intent mainActivityPage = new Intent(StartingActivity.this, MainActivity.class);
-            startActivity(mainActivityPage);
+            startNextPage(MainActivity.class);
             finish();
         }
     }
 
     public void loginClicked(View view)
     {
-
+        startNextPage(LoginActivity.class);
     }
     public void registerClicked(View view)
     {
-        Intent startRegisterPage = new Intent(StartingActivity.this, RegisterActivity.class);
-        startActivity(startRegisterPage);
+        startNextPage(RegisterActivity.class);
+    }
+
+    public void startNextPage(Class<?> destination)
+    {
+        Intent nextPage = new Intent(StartingActivity.this, destination);
+        startActivity(nextPage);
     }
 }
