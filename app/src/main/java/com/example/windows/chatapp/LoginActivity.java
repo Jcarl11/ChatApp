@@ -30,7 +30,14 @@ public class LoginActivity extends Activity
 
     public void submitClicked(View view)
     {
-        login(email.getText().toString().trim(), password.getText().toString().trim());
+        if(validateEditText(email.getText().toString().trim(), password.getText().toString().trim()))
+        {
+            login(email.getText().toString().trim(), password.getText().toString().trim());
+        }
+        else
+        {
+            Toast.makeText(LoginActivity.this, "Don't leave blank spaces", Toast.LENGTH_SHORT).show();
+        }
     }
     public void login(String user_email, String user_password)
     {
@@ -61,5 +68,14 @@ public class LoginActivity extends Activity
         Intent next = new Intent(LoginActivity.this, destination);
         startActivity(next);
         finish();
+    }
+
+    public boolean validateEditText(String emailSize, String passwordSize)
+    {
+        if(emailSize.isEmpty() || passwordSize.isEmpty())
+        {
+            return false;
+        }
+        return true;
     }
 }
