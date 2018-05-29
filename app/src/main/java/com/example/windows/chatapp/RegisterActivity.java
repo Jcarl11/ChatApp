@@ -42,9 +42,14 @@ public class RegisterActivity extends AppCompatActivity
 
     public void registerBtnClicked(View view)
     {
-        //Validate if textboxes are empty or not
-        // To be implemented later
-        registerUser(emailAdd.getText().toString().trim(), password.getText().toString().trim());
+        if(validetRegisterEditText(displayName.getText().toString().trim(), emailAdd.getText().toString().trim(), password.getText().toString().trim()))
+        {
+            registerUser(emailAdd.getText().toString().trim(), password.getText().toString().trim());
+        }
+        else
+        {
+            Toast.makeText(RegisterActivity.this, "Don't leave blank spaces", Toast.LENGTH_SHORT).show();
+        }
     }
     public boolean registerUser(String email, String pword)
     {
@@ -72,5 +77,14 @@ public class RegisterActivity extends AppCompatActivity
         Intent sendtoMain = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(sendtoMain);
         finish();
+    }
+
+    public boolean validetRegisterEditText(String displayName, String email, String password)
+    {
+        if(displayName.isEmpty() || email.isEmpty() || password.isEmpty())
+        {
+            return false;
+        }
+        return true;
     }
 }
