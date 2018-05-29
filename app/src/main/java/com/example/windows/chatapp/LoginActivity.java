@@ -1,11 +1,14 @@
 package com.example.windows.chatapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +21,7 @@ public class LoginActivity extends Activity
 {
     private TextInputEditText email,password;
     private FirebaseAuth mAuth;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +45,8 @@ public class LoginActivity extends Activity
     }
     public void login(String user_email, String user_password)
     {
+        hideKeyboard();
+        showProgress("SHOW");
         mAuth.signInWithEmailAndPassword(user_email, user_password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
                 {
@@ -49,14 +55,17 @@ public class LoginActivity extends Activity
                     {
                         if (task.isSuccessful())
                         {
+                            showProgress("HIDE");
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             nextPage(MainActivity.class);
+                            finish();
                         }
                         else
                         {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            showProgress("HIDE");
+                            Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -77,5 +86,30 @@ public class LoginActivity extends Activity
             return false;
         }
         return true;
+    }
+    public void hideKeyboard()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null)
+        {
+            InputMethodManager imm = (InputMethodManager) getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void showProgress(String state)
+    {
+        if(state == "SHOW")
+        {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+        else if(state == "HIDE")
+        {
+            progressDialog.dismiss();
+        }
     }
 }
