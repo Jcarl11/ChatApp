@@ -75,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity
     public void sendtoMainPage()
     {
         Intent sendtoMain = new Intent(RegisterActivity.this, MainActivity.class);
+        sendtoMain.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(sendtoMain);
         finish();
     }

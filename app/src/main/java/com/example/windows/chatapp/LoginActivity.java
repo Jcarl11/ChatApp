@@ -75,6 +75,7 @@ public class LoginActivity extends Activity
     public void nextPage(Class<?> destination)
     {
         Intent next = new Intent(LoginActivity.this, destination);
+        next.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(next);
         finish();
     }
